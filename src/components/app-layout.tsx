@@ -1,9 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, FolderKanban, ClipboardList, ClipboardCheck, Archive, LogOut, HardHat, Menu, X } from "lucide-react";
+import { LayoutDashboard, FolderKanban, ClipboardList, ClipboardCheck, Archive, HardHat, Menu, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
-import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+
 
 const nav = [
   { to: "/", label: "Tableau de bord", icon: LayoutDashboard },
