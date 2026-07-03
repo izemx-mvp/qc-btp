@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedProjetsRouteImport } from './routes/_authenticated/projets'
+import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
 import { Route as AuthenticatedInspectionsRouteImport } from './routes/_authenticated/inspections'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedClassementRouteImport } from './routes/_authenticated/classement'
 import { Route as AuthenticatedChecklistsRouteImport } from './routes/_authenticated/checklists'
+import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
 import { Route as AuthenticatedProjetsProjectIdRouteImport } from './routes/_authenticated/projets.$projectId'
 import { Route as AuthenticatedInspectionsNouvelleRouteImport } from './routes/_authenticated/inspections.nouvelle'
 import { Route as AuthenticatedInspectionsInspectionIdRouteImport } from './routes/_authenticated/inspections.$inspectionId'
@@ -32,6 +34,11 @@ const IndexRoute = IndexRouteImport.update({
 const AuthenticatedProjetsRoute = AuthenticatedProjetsRouteImport.update({
   id: '/projets',
   path: '/projets',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedParametresRoute = AuthenticatedParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedInspectionsRoute =
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/classement': typeof AuthenticatedClassementRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/parametres': typeof AuthenticatedParametresRoute
   '/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
   '/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/classement': typeof AuthenticatedClassementRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/parametres': typeof AuthenticatedParametresRoute
   '/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
   '/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/_authenticated/classement': typeof AuthenticatedClassementRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/_authenticated/parametres': typeof AuthenticatedParametresRoute
   '/_authenticated/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/_authenticated/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
   '/_authenticated/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/classement'
     | '/dashboard'
     | '/inspections'
+    | '/parametres'
     | '/projets'
     | '/inspections/$inspectionId'
     | '/inspections/nouvelle'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/classement'
     | '/dashboard'
     | '/inspections'
+    | '/parametres'
     | '/projets'
     | '/inspections/$inspectionId'
     | '/inspections/nouvelle'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/_authenticated/classement'
     | '/_authenticated/dashboard'
     | '/_authenticated/inspections'
+    | '/_authenticated/parametres'
     | '/_authenticated/projets'
     | '/_authenticated/inspections/$inspectionId'
     | '/_authenticated/inspections/nouvelle'
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       path: '/projets'
       fullPath: '/projets'
       preLoaderRoute: typeof AuthenticatedProjetsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/parametres': {
+      id: '/_authenticated/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof AuthenticatedParametresRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inspections': {
@@ -260,6 +280,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClassementRoute: typeof AuthenticatedClassementRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInspectionsRoute: typeof AuthenticatedInspectionsRouteWithChildren
+  AuthenticatedParametresRoute: typeof AuthenticatedParametresRoute
   AuthenticatedProjetsRoute: typeof AuthenticatedProjetsRouteWithChildren
 }
 
@@ -268,6 +289,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClassementRoute: AuthenticatedClassementRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInspectionsRoute: AuthenticatedInspectionsRouteWithChildren,
+  AuthenticatedParametresRoute: AuthenticatedParametresRoute,
   AuthenticatedProjetsRoute: AuthenticatedProjetsRouteWithChildren,
 }
 
