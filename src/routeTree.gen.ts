@@ -61,11 +61,6 @@ const AuthenticatedChecklistsRoute = AuthenticatedChecklistsRouteImport.update({
   path: '/checklists',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedParametresRoute = AuthenticatedParametresRouteImport.update({
-  id: '/parametres',
-  path: '/parametres',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedProjetsProjectIdRoute =
   AuthenticatedProjetsProjectIdRouteImport.update({
     id: '/$projectId',
