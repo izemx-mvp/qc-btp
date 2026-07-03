@@ -17,7 +17,6 @@ import { Route as AuthenticatedInspectionsRouteImport } from './routes/_authenti
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedClassementRouteImport } from './routes/_authenticated/classement'
 import { Route as AuthenticatedChecklistsRouteImport } from './routes/_authenticated/checklists'
-import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
 import { Route as AuthenticatedProjetsProjectIdRouteImport } from './routes/_authenticated/projets.$projectId'
 import { Route as AuthenticatedInspectionsNouvelleRouteImport } from './routes/_authenticated/inspections.nouvelle'
 import { Route as AuthenticatedInspectionsInspectionIdRouteImport } from './routes/_authenticated/inspections.$inspectionId'
@@ -60,6 +59,11 @@ const AuthenticatedClassementRoute = AuthenticatedClassementRouteImport.update({
 const AuthenticatedChecklistsRoute = AuthenticatedChecklistsRouteImport.update({
   id: '/checklists',
   path: '/checklists',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedParametresRoute = AuthenticatedParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProjetsProjectIdRoute =
