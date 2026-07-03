@@ -1,21 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { useStore } from "@/lib/store";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  beforeLoad: () => {
+    throw redirect({ to: "/dashboard" });
+  },
 });
-
-function Index() {
-  const { auth, hydrated } = useStore();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!hydrated) return;
-    navigate({ to: auth ? "/dashboard" : "/auth", replace: true });
-  }, [auth, hydrated, navigate]);
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-sm text-muted-foreground">Chargement…</div>
-    </div>
-  );
-}
