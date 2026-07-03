@@ -9,38 +9,177 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedProjetsRouteImport } from './routes/_authenticated/projets'
+import { Route as AuthenticatedInspectionsRouteImport } from './routes/_authenticated/inspections'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedClassementRouteImport } from './routes/_authenticated/classement'
+import { Route as AuthenticatedChecklistsRouteImport } from './routes/_authenticated/checklists'
+import { Route as AuthenticatedProjetsProjectIdRouteImport } from './routes/_authenticated/projets.$projectId'
+import { Route as AuthenticatedInspectionsNouvelleRouteImport } from './routes/_authenticated/inspections.nouvelle'
+import { Route as AuthenticatedInspectionsInspectionIdRouteImport } from './routes/_authenticated/inspections.$inspectionId'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedProjetsRoute = AuthenticatedProjetsRouteImport.update({
+  id: '/projets',
+  path: '/projets',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInspectionsRoute =
+  AuthenticatedInspectionsRouteImport.update({
+    id: '/inspections',
+    path: '/inspections',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedClassementRoute = AuthenticatedClassementRouteImport.update({
+  id: '/classement',
+  path: '/classement',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedChecklistsRoute = AuthenticatedChecklistsRouteImport.update({
+  id: '/checklists',
+  path: '/checklists',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProjetsProjectIdRoute =
+  AuthenticatedProjetsProjectIdRouteImport.update({
+    id: '/$projectId',
+    path: '/$projectId',
+    getParentRoute: () => AuthenticatedProjetsRoute,
+  } as any)
+const AuthenticatedInspectionsNouvelleRoute =
+  AuthenticatedInspectionsNouvelleRouteImport.update({
+    id: '/nouvelle',
+    path: '/nouvelle',
+    getParentRoute: () => AuthenticatedInspectionsRoute,
+  } as any)
+const AuthenticatedInspectionsInspectionIdRoute =
+  AuthenticatedInspectionsInspectionIdRouteImport.update({
+    id: '/$inspectionId',
+    path: '/$inspectionId',
+    getParentRoute: () => AuthenticatedInspectionsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/checklists': typeof AuthenticatedChecklistsRoute
+  '/classement': typeof AuthenticatedClassementRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/projets': typeof AuthenticatedProjetsRouteWithChildren
+  '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
+  '/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
+  '/projets/$projectId': typeof AuthenticatedProjetsProjectIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/checklists': typeof AuthenticatedChecklistsRoute
+  '/classement': typeof AuthenticatedClassementRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/projets': typeof AuthenticatedProjetsRouteWithChildren
+  '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
+  '/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
+  '/projets/$projectId': typeof AuthenticatedProjetsProjectIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/checklists': typeof AuthenticatedChecklistsRoute
+  '/_authenticated/classement': typeof AuthenticatedClassementRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/_authenticated/projets': typeof AuthenticatedProjetsRouteWithChildren
+  '/_authenticated/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
+  '/_authenticated/inspections/nouvelle': typeof AuthenticatedInspectionsNouvelleRoute
+  '/_authenticated/projets/$projectId': typeof AuthenticatedProjetsProjectIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/checklists'
+    | '/classement'
+    | '/dashboard'
+    | '/inspections'
+    | '/projets'
+    | '/inspections/$inspectionId'
+    | '/inspections/nouvelle'
+    | '/projets/$projectId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/checklists'
+    | '/classement'
+    | '/dashboard'
+    | '/inspections'
+    | '/projets'
+    | '/inspections/$inspectionId'
+    | '/inspections/nouvelle'
+    | '/projets/$projectId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/checklists'
+    | '/_authenticated/classement'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/inspections'
+    | '/_authenticated/projets'
+    | '/_authenticated/inspections/$inspectionId'
+    | '/_authenticated/inspections/nouvelle'
+    | '/_authenticated/projets/$projectId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +187,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/projets': {
+      id: '/_authenticated/projets'
+      path: '/projets'
+      fullPath: '/projets'
+      preLoaderRoute: typeof AuthenticatedProjetsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inspections': {
+      id: '/_authenticated/inspections'
+      path: '/inspections'
+      fullPath: '/inspections'
+      preLoaderRoute: typeof AuthenticatedInspectionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/classement': {
+      id: '/_authenticated/classement'
+      path: '/classement'
+      fullPath: '/classement'
+      preLoaderRoute: typeof AuthenticatedClassementRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/checklists': {
+      id: '/_authenticated/checklists'
+      path: '/checklists'
+      fullPath: '/checklists'
+      preLoaderRoute: typeof AuthenticatedChecklistsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/projets/$projectId': {
+      id: '/_authenticated/projets/$projectId'
+      path: '/$projectId'
+      fullPath: '/projets/$projectId'
+      preLoaderRoute: typeof AuthenticatedProjetsProjectIdRouteImport
+      parentRoute: typeof AuthenticatedProjetsRoute
+    }
+    '/_authenticated/inspections/nouvelle': {
+      id: '/_authenticated/inspections/nouvelle'
+      path: '/nouvelle'
+      fullPath: '/inspections/nouvelle'
+      preLoaderRoute: typeof AuthenticatedInspectionsNouvelleRouteImport
+      parentRoute: typeof AuthenticatedInspectionsRoute
+    }
+    '/_authenticated/inspections/$inspectionId': {
+      id: '/_authenticated/inspections/$inspectionId'
+      path: '/$inspectionId'
+      fullPath: '/inspections/$inspectionId'
+      preLoaderRoute: typeof AuthenticatedInspectionsInspectionIdRouteImport
+      parentRoute: typeof AuthenticatedInspectionsRoute
+    }
   }
 }
 
+interface AuthenticatedInspectionsRouteChildren {
+  AuthenticatedInspectionsInspectionIdRoute: typeof AuthenticatedInspectionsInspectionIdRoute
+  AuthenticatedInspectionsNouvelleRoute: typeof AuthenticatedInspectionsNouvelleRoute
+}
+
+const AuthenticatedInspectionsRouteChildren: AuthenticatedInspectionsRouteChildren =
+  {
+    AuthenticatedInspectionsInspectionIdRoute:
+      AuthenticatedInspectionsInspectionIdRoute,
+    AuthenticatedInspectionsNouvelleRoute:
+      AuthenticatedInspectionsNouvelleRoute,
+  }
+
+const AuthenticatedInspectionsRouteWithChildren =
+  AuthenticatedInspectionsRoute._addFileChildren(
+    AuthenticatedInspectionsRouteChildren,
+  )
+
+interface AuthenticatedProjetsRouteChildren {
+  AuthenticatedProjetsProjectIdRoute: typeof AuthenticatedProjetsProjectIdRoute
+}
+
+const AuthenticatedProjetsRouteChildren: AuthenticatedProjetsRouteChildren = {
+  AuthenticatedProjetsProjectIdRoute: AuthenticatedProjetsProjectIdRoute,
+}
+
+const AuthenticatedProjetsRouteWithChildren =
+  AuthenticatedProjetsRoute._addFileChildren(AuthenticatedProjetsRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedChecklistsRoute: typeof AuthenticatedChecklistsRoute
+  AuthenticatedClassementRoute: typeof AuthenticatedClassementRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInspectionsRoute: typeof AuthenticatedInspectionsRouteWithChildren
+  AuthenticatedProjetsRoute: typeof AuthenticatedProjetsRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedChecklistsRoute: AuthenticatedChecklistsRoute,
+  AuthenticatedClassementRoute: AuthenticatedClassementRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInspectionsRoute: AuthenticatedInspectionsRouteWithChildren,
+  AuthenticatedProjetsRoute: AuthenticatedProjetsRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
