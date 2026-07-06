@@ -25,7 +25,7 @@ interface StoreCtx {
 }
 
 const KEY_AUTH = "qcbtp.auth";
-const KEY_DATA = "qcbtp.data.v4";
+const KEY_DATA = "qcbtp.data.v5";
 
 const seedData = (): Data => {
   const now = new Date().toISOString();
@@ -258,7 +258,25 @@ const seedData = (): Data => {
     mk(19, "p4", "Bétonnage", "c2", "2026-04-22", 1, "nc_closed"),
   ];
 
-  return { projects, checklists, inspections };
+  const enriched = inspections.map((i) => {
+    if (!i.sharedWithClient) return i;
+    const proj = projects.find((p) => p.id === i.projectId);
+    const dest = proj?.clientPlatform ?? "gdrive";
+    const folder = proj?.clientFolderPath ?? "";
+    return {
+      ...i,
+      signedPdfName: `${i.number}_signe.pdf`,
+      signedPdfUploadedAt: i.date,
+      sharedDestination: dest,
+      sharedAt: i.date,
+      sharedLink:
+        dest === "gdrive"
+          ? `https://drive.google.com/file/d/mock-${i.id}/view`
+          : `https://tangermed.sharepoint.com/${folder}/${i.number}_signe.pdf`,
+    };
+  });
+
+  return { projects, checklists, inspections: enriched };
 };
 
 const Ctx = createContext<StoreCtx | null>(null);
