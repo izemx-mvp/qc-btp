@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Download, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, FileCheck2, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
 import { exportInspectionPDF } from "@/lib/pdf";
 import { PageHeader } from "@/components/app-layout";
 import { NCBadge, ResultBadge, StageBadge } from "@/components/status-badge";
