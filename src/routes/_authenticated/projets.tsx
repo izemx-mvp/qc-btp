@@ -85,48 +85,46 @@ function Projects() {
 
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {list.map((p) => (
-            <div key={p.id} className="rounded-lg border border-border bg-card p-4">
+            <div key={p.id} className="group panel-elevated p-5 hover:border-primary/30 transition-all">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-xs text-muted-foreground">{p.code}</div>
+                  <div className="mono text-[10px] uppercase tracking-widest text-muted-foreground">{p.code}</div>
                   <Link
                     to="/projets/$projectId"
                     params={{ projectId: p.id }}
-                    className="font-medium hover:underline block truncate"
+                    className="mt-0.5 font-semibold text-foreground hover:text-primary transition-colors block truncate"
                   >
                     {p.name}
                   </Link>
-                  <div className="text-sm text-muted-foreground truncate">{p.client}</div>
+                  <div className="text-xs text-muted-foreground truncate mt-0.5">{p.client}</div>
                 </div>
                 <StatusPill status={p.status} />
               </div>
-              <div className="mt-3 text-xs text-muted-foreground">
-                Début: {p.startDate}
+              <div className="mono mt-4 text-[10px] uppercase tracking-widest text-muted-foreground">
+                Début · {p.startDate}
                 {p.controlPlan?.ref ? ` · ${p.controlPlan.ref}` : ""}
               </div>
               {p.controlPlan?.controlTypes && p.controlPlan.controlTypes.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-1">
+                <div className="mt-3 flex flex-wrap gap-1">
                   {p.controlPlan.controlTypes.map((t) => (
-                    <span key={t} className="text-xs rounded bg-secondary text-secondary-foreground px-2 py-0.5">
+                    <span key={t} className="mono text-[10px] uppercase tracking-wider rounded-md border border-border bg-white/[0.03] text-muted-foreground px-1.5 py-0.5">
                       {t}
                     </span>
                   ))}
                 </div>
               )}
-              <div className="mt-4 flex justify-end gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setEditing(p);
-                    setOpen(true);
-                  }}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="sm" onClick={() => remove(p.id)}>
-                  <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
+              <div className="mt-4 pt-3 border-t border-border flex justify-between items-center">
+                <Link to="/projets/$projectId" params={{ projectId: p.id }} className="text-xs text-primary hover:underline">
+                  Ouvrir le projet →
+                </Link>
+                <div className="flex gap-1">
+                  <Button variant="ghost" size="sm" onClick={() => { setEditing(p); setOpen(true); }}>
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => remove(p.id)}>
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
@@ -134,6 +132,7 @@ function Projects() {
             <div className="col-span-full text-sm text-muted-foreground">Aucun projet.</div>
           )}
         </div>
+
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -147,17 +146,24 @@ function Projects() {
 
 function StatusPill({ status }: { status: ProjectStatus }) {
   const map = {
-    actif: "bg-emerald-100 text-emerald-800 border-emerald-200",
-    termine: "bg-slate-100 text-slate-700 border-slate-200",
-    en_pause: "bg-amber-100 text-amber-800 border-amber-200",
+    actif: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+    termine: "bg-slate-500/10 text-slate-400 border-slate-500/30",
+    en_pause: "bg-amber-500/10 text-amber-400 border-amber-500/30",
   } as const;
   const label = { actif: "Actif", termine: "Terminé", en_pause: "En pause" } as const;
+  const dot = {
+    actif: "bg-emerald-400",
+    termine: "bg-slate-400",
+    en_pause: "bg-amber-400",
+  } as const;
   return (
-    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${map[status]}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide ${map[status]}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${dot[status]}`} />
       {label[status]}
     </span>
   );
 }
+
 
 function ProjectForm({ project, onSubmit }: { project: Project; onSubmit: (p: Project) => void }) {
   const [p, setP] = useState<Project>(project);

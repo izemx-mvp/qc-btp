@@ -13,6 +13,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedProjetsRouteImport } from './routes/_authenticated/projets'
 import { Route as AuthenticatedParametresRouteImport } from './routes/_authenticated/parametres'
+import { Route as AuthenticatedNonConformitesRouteImport } from './routes/_authenticated/non-conformites'
 import { Route as AuthenticatedInspectionsRouteImport } from './routes/_authenticated/inspections'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedClassementRouteImport } from './routes/_authenticated/classement'
@@ -40,6 +41,12 @@ const AuthenticatedParametresRoute = AuthenticatedParametresRouteImport.update({
   path: '/parametres',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNonConformitesRoute =
+  AuthenticatedNonConformitesRouteImport.update({
+    id: '/non-conformites',
+    path: '/non-conformites',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedInspectionsRoute =
   AuthenticatedInspectionsRouteImport.update({
     id: '/inspections',
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/classement': typeof AuthenticatedClassementRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/non-conformites': typeof AuthenticatedNonConformitesRoute
   '/parametres': typeof AuthenticatedParametresRoute
   '/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
@@ -98,6 +106,7 @@ export interface FileRoutesByTo {
   '/classement': typeof AuthenticatedClassementRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/non-conformites': typeof AuthenticatedNonConformitesRoute
   '/parametres': typeof AuthenticatedParametresRoute
   '/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
@@ -112,6 +121,7 @@ export interface FileRoutesById {
   '/_authenticated/classement': typeof AuthenticatedClassementRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/inspections': typeof AuthenticatedInspectionsRouteWithChildren
+  '/_authenticated/non-conformites': typeof AuthenticatedNonConformitesRoute
   '/_authenticated/parametres': typeof AuthenticatedParametresRoute
   '/_authenticated/projets': typeof AuthenticatedProjetsRouteWithChildren
   '/_authenticated/inspections/$inspectionId': typeof AuthenticatedInspectionsInspectionIdRoute
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/classement'
     | '/dashboard'
     | '/inspections'
+    | '/non-conformites'
     | '/parametres'
     | '/projets'
     | '/inspections/$inspectionId'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/classement'
     | '/dashboard'
     | '/inspections'
+    | '/non-conformites'
     | '/parametres'
     | '/projets'
     | '/inspections/$inspectionId'
@@ -151,6 +163,7 @@ export interface FileRouteTypes {
     | '/_authenticated/classement'
     | '/_authenticated/dashboard'
     | '/_authenticated/inspections'
+    | '/_authenticated/non-conformites'
     | '/_authenticated/parametres'
     | '/_authenticated/projets'
     | '/_authenticated/inspections/$inspectionId'
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       path: '/parametres'
       fullPath: '/parametres'
       preLoaderRoute: typeof AuthenticatedParametresRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/non-conformites': {
+      id: '/_authenticated/non-conformites'
+      path: '/non-conformites'
+      fullPath: '/non-conformites'
+      preLoaderRoute: typeof AuthenticatedNonConformitesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/inspections': {
@@ -279,6 +299,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedClassementRoute: typeof AuthenticatedClassementRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInspectionsRoute: typeof AuthenticatedInspectionsRouteWithChildren
+  AuthenticatedNonConformitesRoute: typeof AuthenticatedNonConformitesRoute
   AuthenticatedParametresRoute: typeof AuthenticatedParametresRoute
   AuthenticatedProjetsRoute: typeof AuthenticatedProjetsRouteWithChildren
 }
@@ -288,6 +309,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedClassementRoute: AuthenticatedClassementRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInspectionsRoute: AuthenticatedInspectionsRouteWithChildren,
+  AuthenticatedNonConformitesRoute: AuthenticatedNonConformitesRoute,
   AuthenticatedParametresRoute: AuthenticatedParametresRoute,
   AuthenticatedProjetsRoute: AuthenticatedProjetsRouteWithChildren,
 }
