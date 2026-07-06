@@ -20,8 +20,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/projets")({
-  component: Projects,
+  component: ProjectsLayout,
 });
+
+function ProjectsLayout() {
+  const matches = useMatches();
+  const isChild = matches.some((m) => m.routeId !== "/_authenticated/projets" && m.routeId.startsWith("/_authenticated/projets"));
+  if (isChild) return <Outlet />;
+  return <Projects />;
+}
+
 
 const emptyProject = (): Project => ({
   id: uid(),
