@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_authenticated/projets/$projectId")({
 
 function ProjectDetail() {
   const { projectId } = Route.useParams();
-  const { data } = useStore();
+  const { data, hydrated } = useStore();
   const project = data.projects.find((p) => p.id === projectId);
   const [openTypes, setOpenTypes] = useState<Record<string, boolean>>({});
 
@@ -31,7 +31,9 @@ function ProjectDetail() {
   const nc = inspections.filter((i) => i.result === "non_conforme").length;
   const rate = conf + nc ? Math.round((conf / (conf + nc)) * 100) : 0;
 
+  if (!hydrated) return <div className="p-8 text-sm text-muted-foreground">Chargement…</div>;
   if (!project) return <Navigate to="/projets" />;
+
 
   const types = project.controlPlan?.controlTypes ?? [];
   const toggle = (t: string) => setOpenTypes((o) => ({ ...o, [t]: !(o[t] ?? true) }));
