@@ -68,5 +68,10 @@ export interface Inspection {
   attachments: Attachment[];
   stage: InspectionStage;
   sharedWithClient: boolean;
+  signedPdfName?: string;
+  signedPdfUploadedAt?: string;
+  sharedDestination?: ClientPlatform;
+  sharedAt?: string;
+  sharedLink?: string;
   createdAt: string;
 }
