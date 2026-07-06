@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Download, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, FileCheck2, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
 import { exportInspectionPDF } from "@/lib/pdf";
 import { PageHeader } from "@/components/app-layout";
 import { NCBadge, ResultBadge, StageBadge } from "@/components/status-badge";
@@ -209,6 +209,54 @@ function InspectionDetail() {
                 </SelectContent>
               </Select>
               {state.ncClosedDate && <span className="text-xs text-muted-foreground">Clôturée le {state.ncClosedDate}</span>}
+            </div>
+          </section>
+        )}
+
+        {state.signedPdfName && (
+          <section className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <FileCheck2 className="h-4 w-4 text-emerald-600" />
+              <div className="font-medium text-emerald-900 dark:text-emerald-300">Inspection signée</div>
+              {state.sharedDestination && (
+                <span className="ml-auto inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-700 dark:text-emerald-300">
+                  {state.sharedDestination === "gdrive" ? "Google Drive" : "SharePoint"}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-3 rounded-md border border-border bg-card px-3 py-2 min-w-0 flex-1">
+                <div className="h-10 w-10 shrink-0 rounded bg-emerald-500/10 grid place-items-center text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+                  PDF
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium truncate">{state.signedPdfName}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {state.signedPdfUploadedAt ? `Déposé le ${state.signedPdfUploadedAt}` : "Document signé"}
+                    {state.sharedAt ? ` · Partagé le ${state.sharedAt}` : ""}
+                  </div>
+                </div>
+              </div>
+              {state.sharedLink && (
+                <Button variant="outline" asChild>
+                  <a href={state.sharedLink} target="_blank" rel="noreferrer">
+                    <ExternalLink className="mr-2 h-4 w-4" /> Ouvrir chez le client
+                  </a>
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    await exportInspectionPDF(state, project ?? null);
+                    toast.success("PDF téléchargé");
+                  } catch {
+                    toast.error("Échec du téléchargement");
+                  }
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" /> Télécharger
+              </Button>
             </div>
           </section>
         )}
