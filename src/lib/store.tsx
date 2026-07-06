@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { ChecklistTemplate, Inspection, Project } from "./types";
+import type { Attachment, ChecklistTemplate, Inspection, Project } from "./types";
 
 interface AuthUser {
   email: string;

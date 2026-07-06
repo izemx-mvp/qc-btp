@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Navigate, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowLeft, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
+import { ArrowLeft, Download, Paperclip, Save, Send, Share2, Trash2, X } from "lucide-react";
+import { exportInspectionPDF } from "@/lib/pdf";
 import { PageHeader } from "@/components/app-layout";
 import { NCBadge, ResultBadge, StageBadge } from "@/components/status-badge";
 import { useStore, uid } from "@/lib/store";
@@ -97,9 +98,25 @@ function InspectionDetail() {
         title={`${state.number} — ${state.controlType}`}
         description={project ? `${project.code} · ${project.name}` : ""}
         action={
-          <Button variant="ghost" asChild>
-            <Link to="/inspections"><ArrowLeft className="mr-2 h-4 w-4" /> Retour</Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={async () => {
+                try {
+                  await exportInspectionPDF(state, project ?? null);
+                  toast.success("PDF téléchargé");
+                } catch (e) {
+                  console.error(e);
+                  toast.error("Échec de l'export PDF");
+                }
+              }}
+            >
+              <Download className="mr-2 h-4 w-4" /> Télécharger PDF
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link to="/inspections"><ArrowLeft className="mr-2 h-4 w-4" /> Retour</Link>
+            </Button>
+          </div>
         }
       />
 
