@@ -25,7 +25,7 @@ interface StoreCtx {
 }
 
 const KEY_AUTH = "qcbtp.auth";
-const KEY_DATA = "qcbtp.data.v4";
+const KEY_DATA = "qcbtp.data.v5";
 
 const seedData = (): Data => {
   const now = new Date().toISOString();
@@ -38,6 +38,8 @@ const seedData = (): Data => {
       startDate: "2026-03-01",
       status: "actif",
       whatsappGroup: "SNG - Contrôle Qualité",
+      clientPlatform: "gdrive",
+      clientFolderPath: "/Clients/Groupe Béton SA/SNG",
       controlPlan: {
         name: "Plan de contrôle SNG",
         ref: "PC-SNG-001",
@@ -52,6 +54,8 @@ const seedData = (): Data => {
       startDate: "2026-04-15",
       status: "actif",
       whatsappGroup: "RSFP Suivi Chantier",
+      clientPlatform: "sharepoint",
+      clientFolderPath: "Sites/Tanger Med Utilities/Documents/Qualité/RSFP",
       controlPlan: {
         name: "Plan de contrôle RSFP",
         ref: "PC-RSFP-01",
@@ -66,6 +70,8 @@ const seedData = (): Data => {
       startDate: "2026-02-10",
       status: "actif",
       whatsappGroup: "OCP Jorf QC",
+      clientPlatform: "sharepoint",
+      clientFolderPath: "Sites/OCP-QC/Documents/Silo Jorf",
       controlPlan: {
         name: "Plan de contrôle OCP Jorf",
         ref: "PC-OCP-JL",
@@ -80,6 +86,8 @@ const seedData = (): Data => {
       startDate: "2025-11-20",
       status: "en_pause",
       whatsappGroup: "ONCF Viaduc",
+      clientPlatform: "gdrive",
+      clientFolderPath: "/Clients/ONCF/Viaduc Kénitra",
       controlPlan: {
         name: "Plan de contrôle ONCF",
         ref: "PC-ONCF-K",
@@ -250,7 +258,25 @@ const seedData = (): Data => {
     mk(19, "p4", "Bétonnage", "c2", "2026-04-22", 1, "nc_closed"),
   ];
 
-  return { projects, checklists, inspections };
+  const enriched = inspections.map((i) => {
+    if (!i.sharedWithClient) return i;
+    const proj = projects.find((p) => p.id === i.projectId);
+    const dest = proj?.clientPlatform ?? "gdrive";
+    const folder = proj?.clientFolderPath ?? "";
+    return {
+      ...i,
+      signedPdfName: `${i.number}_signe.pdf`,
+      signedPdfUploadedAt: i.date,
+      sharedDestination: dest,
+      sharedAt: i.date,
+      sharedLink:
+        dest === "gdrive"
+          ? `https://drive.google.com/file/d/mock-${i.id}/view`
+          : `https://tangermed.sharepoint.com/${folder}/${i.number}_signe.pdf`,
+    };
+  });
+
+  return { projects, checklists, inspections: enriched };
 };
 
 const Ctx = createContext<StoreCtx | null>(null);
