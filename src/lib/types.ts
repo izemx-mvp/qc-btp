@@ -3,6 +3,7 @@ export type InspectionResult = "conforme" | "non_conforme";
 export type ItemResult = "conforme" | "non_conforme" | "non_applicable" | "";
 export type InspectionStage = "brouillon" | "rempli" | "signe" | "classe" | "partage";
 export type NCStatus = "ouvert" | "ferme";
+export type ClientPlatform = "gdrive" | "sharepoint";
 
 export interface Project {
   id: string;
@@ -12,6 +13,8 @@ export interface Project {
   startDate: string;
   status: ProjectStatus;
   whatsappGroup?: string;
+  clientPlatform?: ClientPlatform;
+  clientFolderPath?: string; // ex: /Clients/Groupe Beton SA/SNG
   controlPlan?: {
     name: string;
     ref: string;
