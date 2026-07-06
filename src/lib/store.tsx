@@ -25,7 +25,7 @@ interface StoreCtx {
 }
 
 const KEY_AUTH = "qcbtp.auth";
-const KEY_DATA = "qcbtp.data.v3";
+const KEY_DATA = "qcbtp.data.v4";
 
 const seedData = (): Data => {
   const now = new Date().toISOString();
@@ -147,6 +147,22 @@ const seedData = (): Data => {
     p4: ["Pile P4", "Chevêtre C2", "Semelle P3"],
   };
 
+  const mockPics = (variant: "ok" | "nc_open" | "nc_closed" | "draft", seed: number): Attachment[] => {
+    if (variant === "draft") return [];
+    const count = variant === "ok" ? 2 : 3;
+    return Array.from({ length: count }).map((_, k) => ({
+      id: `att-${seed}-${k}`,
+      name:
+        variant === "nc_open" && k === 0
+          ? `NC_${seed}_defaut.jpg`
+          : variant === "nc_closed" && k === 2
+            ? `${seed}_reprise_apres.jpg`
+            : `${seed}_zone_${k + 1}.jpg`,
+      type: "image/jpeg",
+      dataUrl: `https://picsum.photos/seed/qcbtp-${seed}-${k}/640/420`,
+    }));
+  };
+
   const mk = (
     n: number,
     projectId: keyof typeof zones,
@@ -168,7 +184,7 @@ const seedData = (): Data => {
       checklistName: cl.name,
       date,
       zone,
-      attachments: [],
+      attachments: mockPics(variant, n),
       createdAt: now,
     };
     if (variant === "draft") {
