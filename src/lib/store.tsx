@@ -38,6 +38,8 @@ const seedData = (): Data => {
       startDate: "2026-03-01",
       status: "actif",
       whatsappGroup: "SNG - Contrôle Qualité",
+      clientPlatform: "gdrive",
+      clientFolderPath: "/Clients/Groupe Béton SA/SNG",
       controlPlan: {
         name: "Plan de contrôle SNG",
         ref: "PC-SNG-001",
@@ -52,6 +54,8 @@ const seedData = (): Data => {
       startDate: "2026-04-15",
       status: "actif",
       whatsappGroup: "RSFP Suivi Chantier",
+      clientPlatform: "sharepoint",
+      clientFolderPath: "Sites/Tanger Med Utilities/Documents/Qualité/RSFP",
       controlPlan: {
         name: "Plan de contrôle RSFP",
         ref: "PC-RSFP-01",
@@ -66,6 +70,8 @@ const seedData = (): Data => {
       startDate: "2026-02-10",
       status: "actif",
       whatsappGroup: "OCP Jorf QC",
+      clientPlatform: "sharepoint",
+      clientFolderPath: "Sites/OCP-QC/Documents/Silo Jorf",
       controlPlan: {
         name: "Plan de contrôle OCP Jorf",
         ref: "PC-OCP-JL",
@@ -80,6 +86,8 @@ const seedData = (): Data => {
       startDate: "2025-11-20",
       status: "en_pause",
       whatsappGroup: "ONCF Viaduc",
+      clientPlatform: "gdrive",
+      clientFolderPath: "/Clients/ONCF/Viaduc Kénitra",
       controlPlan: {
         name: "Plan de contrôle ONCF",
         ref: "PC-ONCF-K",
