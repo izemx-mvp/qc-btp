@@ -29,10 +29,10 @@ import { useStore } from "@/lib/store";
 const nav = [
   { to: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard, group: "Suivi" },
   { to: "/projets", label: "Projets", icon: FolderKanban, group: "Suivi" },
-  { to: "/inspections", label: "Inspections", icon: ClipboardCheck, group: "Terrain" },
+  { to: "/inspections", label: "AI Inspection", icon: ClipboardCheck, group: "Terrain" },
   { to: "/non-conformites", label: "Non-conformités", icon: AlertOctagon, group: "Terrain" },
   { to: "/checklists", label: "Checklists", icon: ClipboardList, group: "Référentiel" },
-  { to: "/classement", label: "Classement", icon: Archive, group: "Référentiel" },
+  { to: "/classement", label: "AI Classement", icon: Archive, group: "Référentiel" },
   { to: "/parametres", label: "Paramètres", icon: Settings, group: "Système" },
 ] as const;
 
